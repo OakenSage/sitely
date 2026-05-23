@@ -1,0 +1,7 @@
+from textnode import TextNode, TextType
+
+def main():
+    Test=TextNode("Test Test", Bold.TextType)
+    print (Test)
+
+main()

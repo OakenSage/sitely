@@ -38,9 +38,10 @@ def markdown_to_html_node(markdown):
        lock=ParentNode("blockquote",text_to_children(cleaned_text))
        block_lock.append(lock)
      if type==BlockType.UNORDERED_LIST:
-       lines=block.split("- ")
+       lines=block.split("\n")
        new_block=[]
        for line in lines:
+         line=line.strip("- ")
          line=ParentNode("li",text_to_children(line))
          new_block.append(line)
        lock=ParentNode("ul",new_block)
@@ -63,6 +64,14 @@ def markdown_to_html_node(markdown):
        block_lock.append(lock)
    nodes=ParentNode("div",block_lock)
    return nodes
+
+def extract_title(markdown):
+   lines=markdown.split("\n")
+   for line in lines:
+     if line.startswith("# "):
+       heading=line[2:]
+       return heading.strip()
+   raise Exception("No heading")
 
 def text_to_children(text):
    texts=text_to_textnodes(text)

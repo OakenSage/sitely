@@ -27,12 +27,16 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         splitted=node.text.split(delimiter)
         if len(splitted)%2==0:
            raise Exception("delimiter missing")
-        for x in range(1,len(splitted),2):
-           splitted[x]=TextNode(splitted[x],text_type)
-        for x in range(0,len(splitted),2):
-           if splitted[x]!="":
-              splitted[x]=TextNode(splitted[x],TextType.TEXT)
-        new_nodes.extend(splitted)
+        results=[]
+        for x, piece in enumerate(splitted):
+           if x % 2 == 0:
+              if splitted[x]!="":
+                splitted[x]=TextNode(splitted[x],TextType.TEXT)
+                results.append(splitted[x])
+           else:
+              splitted[x]=TextNode(splitted[x],text_type)
+              results.append(splitted[x])
+        new_nodes.extend(results)
      return new_nodes
 
 def split_nodes_image(old_nodes):

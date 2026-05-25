@@ -1,7 +1,17 @@
 import unittest
-from block_code import markdown_to_blocks, block_to_block_type, BlockType, markdown_to_html_node
+from block_code import markdown_to_blocks, block_to_block_type, BlockType, markdown_to_html_node, extract_title
 
 class TextBlockCode(unittest.TestCase):
+
+  def test_title(self):
+    md = "# Hello"
+    self.assertEqual(extract_title(md),"Hello")
+    md2 = """
+
+# fake title      
+
+##two"""
+    self.assertEqual(extract_title(md2),"fake title")
 
   def test_paragraphs(self):
     md = """
